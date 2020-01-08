@@ -4,9 +4,12 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -109,10 +112,25 @@ public class LayoutMain extends JFrame implements ActionListener {
 		
 		btnNo8 = new JButton("No8");
 		btnNo8.addActionListener(this);
+		btnNo8.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				//어떤 버튼 (1: 왼쪽 버튼 , 2 : 휠 클릭 3: 오른쪽 버튼) + 몇 번 클릭 
+				System.out.println(e.getButton() + " : " + e.getClickCount());
+			}
+			
+		});
 		pRight.add(btnNo8);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		//JOptionPane.showMessageDialog(null, e.getSource());
+		//System.out.println(e.getSource());
+		
+		//클릭한 버튼 이름 출력
+		System.out.println(e.getActionCommand());
 		if (e.getSource() == btnAbsolute) {
 			btnAbsoluteActionPerformed(e);
 		}

@@ -33,6 +33,9 @@ public class No8OpenChallenge extends JFrame {
 	 * Create the frame.
 	 */
 	public No8OpenChallenge() {
+		initialize();
+	}
+	private void initialize() {
 		setTitle("여러 개의 패널을 가진 프레임");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 426, 423);
@@ -44,11 +47,12 @@ public class No8OpenChallenge extends JFrame {
 		No8Open_JButtons panel = new No8Open_JButtons();
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		No8Open_JLabel panel_1 = new No8Open_JLabel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		
 		No8Open_JText panel_2 = new No8Open_JText();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		No8Open_JLabel panel_1 = new No8Open_JLabel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
 	}
 
 }

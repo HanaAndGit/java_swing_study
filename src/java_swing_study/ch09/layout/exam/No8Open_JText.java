@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
 public class No8Open_JText extends JPanel {
 	private JTextField textField;
@@ -19,7 +20,7 @@ public class No8Open_JText extends JPanel {
 		
 		textField = new JTextField();
 		add(textField);
-		textField.setColumns(10);
+		textField.setColumns(20);
 
 	}
 
