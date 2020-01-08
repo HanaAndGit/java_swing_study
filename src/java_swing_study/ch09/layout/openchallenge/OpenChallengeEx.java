@@ -33,7 +33,7 @@ public class OpenChallengeEx extends JFrame {
 	 */
 	public OpenChallengeEx() {
 		setTitle("간단한 스윙 응용프로그램");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 338);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
