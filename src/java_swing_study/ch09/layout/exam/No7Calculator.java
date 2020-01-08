@@ -36,7 +36,7 @@ public class No7Calculator extends JFrame {
 	 */
 	public No7Calculator() {
 		setTitle("계산기 프레임");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 362);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
