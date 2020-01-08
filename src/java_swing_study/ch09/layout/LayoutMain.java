@@ -14,6 +14,7 @@ import java_swing_study.ch09.layout.exam.No2BorderLayout;
 import java_swing_study.ch09.layout.exam.No4BackgroundColor;
 import java_swing_study.ch09.layout.exam.No5GridLayout;
 import java_swing_study.ch09.layout.exam.No7Calculator;
+import java_swing_study.ch09.layout.exam.No8OpenChallenge;
 
 import javax.swing.UIManager;
 import java.awt.Color;
@@ -79,6 +80,7 @@ public class LayoutMain extends JFrame implements ActionListener {
 		pLeft.add(btnGrid);
 		
 		btnAbsolute = new JButton("AbsoluteLayout");
+		btnAbsolute.addActionListener(this);
 		pLeft.add(btnAbsolute);
 		
 		btnOpenChallenge = new JButton("Open Challenge");
@@ -106,10 +108,17 @@ public class LayoutMain extends JFrame implements ActionListener {
 		pRight.add(btnNo7);
 		
 		btnNo8 = new JButton("No8");
+		btnNo8.addActionListener(this);
 		pRight.add(btnNo8);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAbsolute) {
+			btnAbsoluteActionPerformed(e);
+		}
+		if (e.getSource() == btnNo8) {
+			btnNo8ActionPerformed(e);
+		}
 		if (e.getSource() == btnNo7) {
 			btnNo7ActionPerformed(e);
 		}
@@ -144,6 +153,14 @@ public class LayoutMain extends JFrame implements ActionListener {
 	}
 	protected void btnNo7ActionPerformed(ActionEvent e) {
 		No7Calculator frame = new No7Calculator();
+		frame.setVisible(true);
+	}
+	protected void btnNo8ActionPerformed(ActionEvent e) {
+		No8OpenChallenge frame = new No8OpenChallenge();
+		frame.setVisible(true);
+	}
+	protected void btnAbsoluteActionPerformed(ActionEvent e) {
+		AbsoluteLayoutEx frame = new AbsoluteLayoutEx();
 		frame.setVisible(true);
 	}
 }
