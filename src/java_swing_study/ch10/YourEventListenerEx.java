@@ -27,14 +27,6 @@ public class YourEventListenerEx extends JFrame implements ActionListener {
 	private JButton btn0202;
 
 	
-	public JPanel getContentPane() {
-		return this.contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
-
 	/**
 	 * Launch the application.
 	 */
