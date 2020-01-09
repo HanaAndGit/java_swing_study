@@ -80,6 +80,7 @@ public class LayoutMain extends JFrame implements ActionListener {
 		pLeft.add(btnBorder);
 		
 		btnGrid = new JButton("GridLayout");
+		btnGrid.addActionListener(this);
 		pLeft.add(btnGrid);
 		
 		btnAbsolute = new JButton("AbsoluteLayout");
@@ -126,6 +127,9 @@ public class LayoutMain extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnGrid) {
+			btnGridActionPerformed(e);
+		}
 		//JOptionPane.showMessageDialog(null, e.getSource());
 		//System.out.println(e.getSource());
 		
@@ -179,6 +183,10 @@ public class LayoutMain extends JFrame implements ActionListener {
 	}
 	protected void btnAbsoluteActionPerformed(ActionEvent e) {
 		AbsoluteLayoutEx frame = new AbsoluteLayoutEx();
+		frame.setVisible(true);
+	}
+	protected void btnGridActionPerformed(ActionEvent e) {
+		GridLayoutEx frame = new GridLayoutEx();
 		frame.setVisible(true);
 	}
 }
