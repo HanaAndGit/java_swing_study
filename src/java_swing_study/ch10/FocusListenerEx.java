@@ -273,12 +273,19 @@ public class FocusListenerEx extends JFrame implements ActionListener {
 			btnOKActionPerformed(e);
 		}
 	}
-	Students std;
+	
 	protected void btnOKActionPerformed(ActionEvent e) {
-		std = new Students(tfName.getText(), Integer.parseInt(tfNo.getText()), tfSubj.getText(), tfDept.getText());
+		Students std = getStudent();
 		JOptionPane.showMessageDialog(null, std);
 		
 	}
+
+	public Students getStudent() {
+		Students std = new Students(tfName.getText(), Integer.parseInt(tfNo.getText()), tfSubj.getText(), tfDept.getText());
+		return std;
+	}
+	
+	
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		tfName.setText("");
 		tfNo.setText("");
@@ -286,6 +293,6 @@ public class FocusListenerEx extends JFrame implements ActionListener {
 		tfDept.setText("");
 	}
 	protected void btnSetActionPerformed(ActionEvent e) {
-		tfName.setText(std.getName());
+		
 	}
 }

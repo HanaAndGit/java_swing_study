@@ -9,6 +9,14 @@ public class Students {
 	
 	
 	
+	public Students() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
 	public Students(String name, int no, String subj, String dept) {
 		this.name = name;
 		this.sno = no;
