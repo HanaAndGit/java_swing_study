@@ -139,18 +139,24 @@ public class CheckBoxItemEventEx extends JFrame implements ActionListener {
 			if(e.getStateChange()==ItemEvent.SELECTED) { //선택 
 				if(e.getItem()==fruits[0]){
 					sum+=100;
+					btn1.setText("사과 취소");
 				}else if(e.getItem()==fruits[1]){
 					sum+=500;
+					btn2.setText("배 취소");
 				}else {
 					sum += 20000;
+					btn3.setText("체리 취소");
 				}
 			}else { //해제
 				if(e.getItem()==fruits[0]) {
 					sum -= 100;
+					btn1.setText("사과 선택");
 				}else if(e.getItem()==fruits[1]) {
 					sum -= 500;
+					btn2.setText("배 선택");
 				}else {
 					sum -= 20000;
+					btn3.setText("체리 선택");
 				}
 			}
 			lblText.setText("현재 " + sum + " 원 입니다."  );
@@ -179,37 +185,49 @@ public class CheckBoxItemEventEx extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	protected void chkSetSelected(JCheckBox ch, JButton btn) {
+		if(ch.isSelected()) {
+			ch.setSelected(false);
+			btn.setText(ch.getText() + " 선택");
+		}else {
+			ch.setSelected(true);
+			btn.setText(ch.getText()+" 취소");
+		}
+	}
 
 	
 	protected void btn1ActionPerformed(ActionEvent e) {
-		if(btn1.getText().equals("사과 선택")) {
-			fruits[0].setSelected(true);
-			btn1.setText("사과 취소");
-		}else {
-			fruits[0].setSelected(false);
-			btn1.setText("사과 선택");
-		}
+		
+		chkSetSelected(fruits[0], btn1);
+		/*
+		 * if(btn1.getText().equals("사과 선택")) { fruits[0].setSelected(true);
+		 * btn1.setText("사과 취소"); }else { fruits[0].setSelected(false);
+		 * btn1.setText("사과 선택"); }
+		 */
 	
 		
 	}
 	protected void btn2ActionPerformed(ActionEvent e) {
-		if(btn2.getText().equals("배 선택")) {
-			fruits[1].setSelected(true);
-			btn2.setText("배 취소");
-		}else {
-			fruits[1].setSelected(false);
-			btn2.setText("배 선택");
-		}
+		
+		chkSetSelected(fruits[1], btn2);
+		
+		/*
+		 * if(btn2.getText().equals("배 선택")) { fruits[1].setSelected(true);
+		 * btn2.setText("배 취소"); }else { fruits[1].setSelected(false);
+		 * btn2.setText("배 선택"); }
+		 */
 	}
 	
 	protected void btn3ActionPerformed(ActionEvent e) {
-		if(btn3.getText().equals("체리 선택")) {
-			fruits[2].setSelected(true);
-			btn3.setText("체리 취소");
-		}else {
-			fruits[2].setSelected(false);
-			btn3.setText("체리 선택");
-		}
+		
+		chkSetSelected(fruits[2], btn3);
+		
+		/*
+		 * if(btn3.getText().equals("체리 선택")) { fruits[2].setSelected(true);
+		 * btn3.setText("체리 취소"); }else { fruits[2].setSelected(false);
+		 * btn3.setText("체리 선택"); }
+		 */
 		
 		
 	}
