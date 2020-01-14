@@ -18,9 +18,12 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class RadioButtonEx extends JFrame implements ItemListener {
+public class RadioButtonEx extends JFrame implements ItemListener, ActionListener {
 
 	private JPanel contentPane;
 	private JPanel pLeft;
@@ -33,7 +36,11 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 	private JLabel lblImg;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private HashMap<String, ImageIcon> icons;
-	
+	private JButton btnApple;
+	private JButton btnPear;
+	private JButton btnCherry;
+	private JButton btnConfirm;
+	private JRadioButton[] jrb = new JRadioButton[3]; 
 	/**
 	 * Launch the application.
 	 */
@@ -81,14 +88,17 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 		rdbtnApple = new JRadioButton("사과");
 		buttonGroup.add(rdbtnApple);
 		pRdbBtns.add(rdbtnApple);
+		jrb[0] = rdbtnApple;
 		
 		rdbtnPear = new JRadioButton("배");
 		buttonGroup.add(rdbtnPear);
 		pRdbBtns.add(rdbtnPear);
+		jrb[1] = rdbtnPear;
 		
 		rdbtnCherry = new JRadioButton("체리");
 		buttonGroup.add(rdbtnCherry);
 		pRdbBtns.add(rdbtnCherry);
+		jrb[2] = rdbtnCherry;
 		
 		pLblImg = new JPanel();
 		pLblImg.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -100,6 +110,23 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 		
 		pRight = new JPanel();
 		contentPane.add(pRight);
+		pRight.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnApple = new JButton("사과 선택");
+		btnApple.addActionListener(this);
+		pRight.add(btnApple);
+		
+		btnPear = new JButton("배 선택");
+		btnPear.addActionListener(this);
+		pRight.add(btnPear);
+		
+		btnCherry = new JButton("체리 선택");
+		btnCherry.addActionListener(this);
+		pRight.add(btnCherry);
+		
+		btnConfirm = new JButton("선택한 과일 확인");
+		btnConfirm.addActionListener(this);
+		pRight.add(btnConfirm);
 		
 
 		rdbtnApple.addItemListener(this);
@@ -138,4 +165,45 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 			lblImg.setIcon(icons.get(rdbtnCherry.getText()));
 		}
 	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnPear) {
+			btnPearActionPerformed(e);
+		}
+		if (e.getSource() == btnConfirm) {
+			btnConfirmActionPerformed(e);
+		}
+		if (e.getSource() == btnApple) {
+			btnAppleActionPerformed(e);
+		}
+		if (e.getSource() == btnCherry) {
+			btnCherryActionPerformed(e);
+		}
+	}
+	
+	protected void btnAppleActionPerformed(ActionEvent e) {
+		//System.out.println("apple");
+		rdbtnApple.setSelected(true);
+		
+	}
+	protected void btnPearActionPerformed(ActionEvent e) {
+		//System.out.println("pear");
+		rdbtnPear.setSelected(true);
+	}
+	protected void btnCherryActionPerformed(ActionEvent e) {
+		//System.out.println("cherry");
+		rdbtnCherry.setSelected(true);
+	}
+	protected void btnConfirmActionPerformed(ActionEvent e) {
+		//System.out.println("confirm");
+		String chkfr = "";
+		for(JRadioButton jbt : jrb) {
+			if(jbt instanceof JRadioButton) {
+				if(jbt.isSelected()) {
+					chkfr = jbt.getText();
+				}
+			}
+		}
+		JOptionPane.showMessageDialog(null, "선택한 과일은 " + chkfr);
+	}
+	
 }
