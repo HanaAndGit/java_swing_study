@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class RadioButtonEx extends JFrame implements ItemListener, ActionListener {
@@ -41,6 +42,7 @@ public class RadioButtonEx extends JFrame implements ItemListener, ActionListene
 	private JButton btnCherry;
 	private JButton btnConfirm;
 	private JRadioButton[] jrb = new JRadioButton[3]; 
+	private JTextField textField;
 	/**
 	 * Launch the application.
 	 */
@@ -127,6 +129,11 @@ public class RadioButtonEx extends JFrame implements ItemListener, ActionListene
 		btnConfirm = new JButton("선택한 과일 확인");
 		btnConfirm.addActionListener(this);
 		pRight.add(btnConfirm);
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		pRight.add(textField);
+		textField.setColumns(10);
 		
 
 		rdbtnApple.addItemListener(this);
