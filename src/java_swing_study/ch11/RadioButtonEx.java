@@ -1,21 +1,23 @@
 package java_swing_study.ch11;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.HashMap;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
-import java.awt.BorderLayout;
-import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ButtonGroup;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class RadioButtonEx extends JFrame implements ItemListener {
@@ -30,7 +32,8 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 	private JRadioButton rdbtnCherry;
 	private JLabel lblImg;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-
+	private HashMap<String, ImageIcon> icons;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -51,6 +54,12 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 	 * Create the frame.
 	 */
 	public RadioButtonEx() {
+		//initialize에 리스너가 나오기 전에 icons가 추가 되어 있어야함 
+		icons = new HashMap<String, ImageIcon>();
+		String imgDirPath = System.getProperty("user.dir") + "\\images\\";
+		icons.put("사과", new ImageIcon(imgDirPath + "apple.jpg"));
+		icons.put("배", new ImageIcon(imgDirPath + "pear.jpg"));
+		icons.put("체리", new ImageIcon(imgDirPath + "cherry.jpg"));
 		initialize();
 	}
 	private void initialize() {
@@ -70,17 +79,14 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 		pLeft.add(pRdbBtns, BorderLayout.NORTH);
 		
 		rdbtnApple = new JRadioButton("사과");
-		rdbtnApple.addItemListener(this);
 		buttonGroup.add(rdbtnApple);
 		pRdbBtns.add(rdbtnApple);
 		
 		rdbtnPear = new JRadioButton("배");
-		rdbtnPear.addItemListener(this);
 		buttonGroup.add(rdbtnPear);
 		pRdbBtns.add(rdbtnPear);
 		
 		rdbtnCherry = new JRadioButton("체리");
-		rdbtnCherry.addItemListener(this);
 		buttonGroup.add(rdbtnCherry);
 		pRdbBtns.add(rdbtnCherry);
 		
@@ -94,6 +100,13 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 		
 		pRight = new JPanel();
 		contentPane.add(pRight);
+		
+
+		rdbtnApple.addItemListener(this);
+		rdbtnPear.addItemListener(this);
+		rdbtnCherry.addItemListener(this);
+		rdbtnApple.setSelected(true);
+
 	}
 
 	public void itemStateChanged(ItemEvent e) {
@@ -109,17 +122,20 @@ public class RadioButtonEx extends JFrame implements ItemListener {
 	}
 	protected void rdbtnAppleItemStateChanged(ItemEvent e) {
 		if(e.getStateChange() == ItemEvent.SELECTED) {
-			JOptionPane.showMessageDialog(null, ((JRadioButton) e.getItem()).getText());
+			//JOptionPane.showMessageDialog(null, rdbtnApple.getText());
+			lblImg.setIcon(icons.get(rdbtnApple.getText()));
 		}
 	}
 	protected void rdbtnPearItemStateChanged(ItemEvent e) {
 		if(e.getStateChange() == ItemEvent.SELECTED) {
-			JOptionPane.showMessageDialog(null, ((JRadioButton) e.getItem()).getText());
+			//JOptionPane.showMessageDialog(null, ((JRadioButton) e.getItem()).getText());
+			lblImg.setIcon(icons.get(rdbtnPear.getText()));
 		}
 	}
 	protected void rdbtnCherryItemStateChanged(ItemEvent e) {
 		if(e.getStateChange() == ItemEvent.SELECTED) {
-			JOptionPane.showMessageDialog(null, ((JRadioButton) e.getItem()).getText());
+			//JOptionPane.showMessageDialog(null, ((JRadioButton) e.getItem()).getText());
+			lblImg.setIcon(icons.get(rdbtnCherry.getText()));
 		}
 	}
 }
