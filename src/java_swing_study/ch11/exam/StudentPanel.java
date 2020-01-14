@@ -7,8 +7,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import student_management.dto.Student;
-
 @SuppressWarnings("serial")
 public class StudentPanel extends AbsItemPanel<Student> {
 	private JLabel lblStdNo;
@@ -21,7 +19,37 @@ public class StudentPanel extends AbsItemPanel<Student> {
 	private JTextField tfMath;
 	private JLabel lblEng;
 	private JTextField tfEng;
-
+	
+	public JLabel getLblStdNo() {
+		return lblStdNo;
+	}
+	public JTextField getTfStdNo() {
+		return tfStdNo;
+	}
+	public JLabel getLblStdName() {
+		return lblStdName;
+	}
+	public JTextField getTfName() {
+		return tfName;
+	}
+	public JLabel getLblKor() {
+		return lblKor;
+	}
+	public JTextField getTfKor() {
+		return tfKor;
+	}
+	public JLabel getLblMath() {
+		return lblMath;
+	}
+	public JTextField getTfMath() {
+		return tfMath;
+	}
+	public JLabel getLblEng() {
+		return lblEng;
+	}
+	public JTextField getTfEng() {
+		return tfEng;
+	}
 	/**
 	 * Create the panel.
 	 */
