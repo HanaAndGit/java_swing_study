@@ -172,11 +172,12 @@ public class ListEx extends JFrame implements ListSelectionListener, ActionListe
 	}
 	
 	protected void strListValueChanged(ListSelectionEvent e) {
-		System.out.println(e.getValueIsAdjusting());
-		 if (!e.getValueIsAdjusting())  {
-				String selectValue = strList.getSelectedValue();
-				JOptionPane.showMessageDialog(null, "valueChanged - 선택한 과일은?" + selectValue);
-		 }
+		/*
+		 * System.out.println(e.getValueIsAdjusting()); if (!e.getValueIsAdjusting()) {
+		 * String selectValue = strList.getSelectedValue();
+		 * JOptionPane.showMessageDialog(null, "valueChanged - 선택한 과일은?" + selectValue);
+		 * }
+		 */
 	}
 	
 	public void actionPerformed(ActionEvent e) {
