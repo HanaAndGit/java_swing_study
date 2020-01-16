@@ -13,8 +13,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.BoxLayout;
+import javax.swing.JTextField;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class ComboxEx extends JFrame {
+public class ComboxEx extends JFrame implements PropertyChangeListener, ActionListener {
 
 	private JPanel contentPane;
 	private JPanel pLeft;
@@ -22,6 +28,7 @@ public class ComboxEx extends JFrame {
 	private JComboBox<String> cmbFruit;
 	private JComboBox cmbName;
 	private DefaultComboBoxModel<String> model;
+	private JTextField tfFruits;
 
 	/**
 	 * Launch the application.
@@ -59,11 +66,18 @@ public class ComboxEx extends JFrame {
 		pLeft.setBorder(
 				new TitledBorder(null, "\uC608\uC81C11-12", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pLeft);
+		pLeft.setLayout(new GridLayout(3, 3, 0, 0));
 
 		cmbFruit = new JComboBox<>();
 		cmbFruit.setMaximumRowCount(5);
 	
 		pLeft.add(cmbFruit);
+		
+		tfFruits = new JTextField();
+		tfFruits.addActionListener(this);
+		tfFruits.addPropertyChangeListener(this);
+		pLeft.add(tfFruits);
+		tfFruits.setColumns(10);
 
 		cmbName = new JComboBox();
 		pLeft.add(cmbName);
@@ -93,4 +107,22 @@ public class ComboxEx extends JFrame {
 		return model;
 	}
 
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getSource() == tfFruits) {
+			textFieldPropertyChange(evt);
+		}
+	}
+	protected void textFieldPropertyChange(PropertyChangeEvent evt) {
+		
+		
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == tfFruits) {
+			tfFruitsActionPerformed(e);
+		}
+	}
+	protected void tfFruitsActionPerformed(ActionEvent e) {
+		model.addElement(tfFruits.getText());
+		tfFruits.setText("");
+	}
 }
