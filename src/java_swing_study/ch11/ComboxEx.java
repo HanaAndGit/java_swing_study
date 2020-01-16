@@ -2,23 +2,23 @@ package java_swing_study.ch11;
 
 import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.BoxLayout;
-import javax.swing.JTextField;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ComboxEx extends JFrame implements PropertyChangeListener, ActionListener {
 
@@ -26,9 +26,10 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 	private JPanel pLeft;
 	private JPanel pRight;
 	private JComboBox<String> cmbFruit;
-	private JComboBox cmbName;
 	private DefaultComboBoxModel<String> model;
 	private JTextField tfFruits;
+	private JLabel lblText;
+	private JButton btnOk;
 
 	/**
 	 * Launch the application.
@@ -66,21 +67,21 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		pLeft.setBorder(
 				new TitledBorder(null, "\uC608\uC81C11-12", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pLeft);
-		pLeft.setLayout(new GridLayout(3, 3, 0, 0));
+		pLeft.setLayout(new GridLayout(4, 1, 0, 0));
 
 		cmbFruit = new JComboBox<>();
+		
+	
 		cmbFruit.setMaximumRowCount(5);
+		
 	
 		pLeft.add(cmbFruit);
 		
 		tfFruits = new JTextField();
-		tfFruits.addActionListener(this);
-		tfFruits.addPropertyChangeListener(this);
+		
+	
 		pLeft.add(tfFruits);
 		tfFruits.setColumns(10);
-
-		cmbName = new JComboBox();
-		pLeft.add(cmbName);
 
 		pRight = new JPanel();
 		pRight.setBorder(
@@ -92,7 +93,22 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		
 		//cmbFruit.setModel(model);
 		cmbFruit.setModel(getModel());
-		cmbFruit.setSelectedIndex(-1);
+		cmbFruit.setSelectedIndex(0);
+		
+		lblText = new JLabel("");
+		lblText.setHorizontalAlignment(SwingConstants.CENTER);
+		pLeft.add(lblText);
+		
+		btnOk = new JButton("확인");
+		btnOk.addActionListener(this);
+		pLeft.add(btnOk);
+		
+		//리스너는 initialize 가장 마지막에 실행되도록 하기
+		//리스너가 수행되면서 필요한 라벨이나 textfield가 코드 순서 상 생성되기 전에 리스너가 수행되면 nullpointer exception 
+		cmbFruit.addActionListener(this);
+		cmbFruit.addPropertyChangeListener(this);
+		tfFruits.addActionListener(this);
+		tfFruits.addPropertyChangeListener(this);
 	}
 
 	private ComboBoxModel<String> getModel() {
@@ -108,6 +124,9 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getSource() == cmbFruit) {
+			cmbFruitPropertyChange(evt);
+		}
 		if (evt.getSource() == tfFruits) {
 			textFieldPropertyChange(evt);
 		}
@@ -117,6 +136,12 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnOk) {
+			btnOkActionPerformed(e);
+		}
+		if (e.getSource() == cmbFruit) {
+			cmbFruitActionPerformed(e);
+		}
 		if (e.getSource() == tfFruits) {
 			tfFruitsActionPerformed(e);
 		}
@@ -124,5 +149,21 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 	protected void tfFruitsActionPerformed(ActionEvent e) {
 		model.addElement(tfFruits.getText());
 		tfFruits.setText("");
+	}
+	protected void cmbFruitPropertyChange(PropertyChangeEvent evt) {
+		
+		
+		
+	}
+	protected void cmbFruitActionPerformed(ActionEvent e) {
+		JComboBox<String> cb = (JComboBox<String>) e.getSource();
+		String str= (String) cb.getSelectedItem();
+		//System.out.println(str);
+		lblText.setText(str);
+	}
+	protected void btnOkActionPerformed(ActionEvent e) {
+		//JComboBox<String> cb = (JComboBox<String>) e.getSource();
+		//String str = (String) cb.getSelectedItem();
+		JOptionPane.showMessageDialog(null, "선택한 과일은 " + (String)cmbFruit.getSelectedItem());
 	}
 }
