@@ -86,15 +86,14 @@ public class Student {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		
 		Student other = (Student) obj;
-		if (stdNo != other.stdNo)
+		if(other == null) {
 			return false;
+		}
+		if (stdNo != other.stdNo) {
+			return false;
+		}
 		return true;
 	}
 	

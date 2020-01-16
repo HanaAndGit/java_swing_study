@@ -20,7 +20,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-public class ComboxEx extends JFrame implements PropertyChangeListener, ActionListener {
+import java_swing_study.ch11.exam.Student;
+
+@SuppressWarnings("serial")
+public class ComboxEx extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JPanel pLeft;
@@ -30,6 +33,15 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 	private JTextField tfFruits;
 	private JLabel lblText;
 	private JButton btnOk;
+	private JComboBox<Student>cmbStudent;
+	private DefaultComboBoxModel<Student> modelStd;
+	private JLabel lblStudent;
+	private JButton btnConfirm;
+	private JPanel panel;
+	private JLabel lblNum;
+	private JTextField tfNum;
+	private JButton btnSearch;
+	
 
 	/**
 	 * Launch the application.
@@ -70,11 +82,9 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		pLeft.setLayout(new GridLayout(4, 1, 0, 0));
 
 		cmbFruit = new JComboBox<>();
-		
-	
 		cmbFruit.setMaximumRowCount(5);
-		
-	
+		cmbFruit.setModel(getModel());
+		cmbFruit.setSelectedIndex(-1);
 		pLeft.add(cmbFruit);
 		
 		tfFruits = new JTextField();
@@ -84,16 +94,42 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		tfFruits.setColumns(10);
 
 		pRight = new JPanel();
-		pRight.setBorder(
-				new TitledBorder(null, "\uC608\uC81C 11-13", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pRight.setBorder(new TitledBorder(null, "\uC608\uC81C 11-13", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(pRight);
+		pRight.setLayout(new GridLayout(4, 0, 0, 0));
+		
+		cmbStudent = new JComboBox<>();
+		//nullpointer exception => setselectedIndex(-1)
+		cmbStudent.setModel(getModelStd());
+		cmbStudent.setSelectedIndex(-1);
+		pRight.add(cmbStudent);
+		
+		lblStudent = new JLabel("학생정보");
+		lblStudent.setHorizontalAlignment(SwingConstants.CENTER);
+		pRight.add(lblStudent);
+		
+		btnConfirm = new JButton("확인");
+		btnConfirm.addActionListener(this);
+		pRight.add(btnConfirm);
+		
+		panel = new JPanel();
+		pRight.add(panel);
+		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		lblNum = new JLabel("번호");
+		lblNum.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblNum);
+		
+		tfNum = new JTextField();
+		panel.add(tfNum);
+		tfNum.setColumns(10);
+		
+		btnSearch = new JButton("검색");
+		btnSearch.addActionListener(this);
+		panel.add(btnSearch);
 		
 		//cmbFruits에 제네릭 추가 후 콤보박스모델에서 setmodel(model)로 변경
-		
-		
 		//cmbFruit.setModel(model);
-		cmbFruit.setModel(getModel());
-		cmbFruit.setSelectedIndex(0);
 		
 		lblText = new JLabel("");
 		lblText.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,12 +139,25 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		btnOk.addActionListener(this);
 		pLeft.add(btnOk);
 		
+		
+		
 		//리스너는 initialize 가장 마지막에 실행되도록 하기
 		//리스너가 수행되면서 필요한 라벨이나 textfield가 코드 순서 상 생성되기 전에 리스너가 수행되면 nullpointer exception 
 		cmbFruit.addActionListener(this);
-		cmbFruit.addPropertyChangeListener(this);
+		cmbStudent.addActionListener(this);
 		tfFruits.addActionListener(this);
-		tfFruits.addPropertyChangeListener(this);
+	}
+
+	private ComboBoxModel getModelStd() {
+		modelStd = new DefaultComboBoxModel<Student>();
+		Student[] stdList = {new Student(1, "서현진", 80, 90, 90),
+							 new Student(2, "이주영", 50, 20, 70),
+							 new Student(3, "강소라", 40, 70, 50)};
+		
+		for(Student std : stdList) {
+			modelStd.addElement(std);
+		}
+		return modelStd;
 	}
 
 	private ComboBoxModel<String> getModel() {
@@ -123,19 +172,18 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		return model;
 	}
 
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getSource() == cmbFruit) {
-			cmbFruitPropertyChange(evt);
-		}
-		if (evt.getSource() == tfFruits) {
-			textFieldPropertyChange(evt);
-		}
-	}
-	protected void textFieldPropertyChange(PropertyChangeEvent evt) {
-		
-		
-	}
+	
+	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSearch) {
+			btnSearchActionPerformed(e);
+		}
+		if (e.getSource() == btnConfirm) {
+			btnConfirmActionPerformed(e);
+		}
+		if (e.getSource() == cmbStudent) {
+			cmbStudentActionPerformed(e);
+		}
 		if (e.getSource() == btnOk) {
 			btnOkActionPerformed(e);
 		}
@@ -150,11 +198,9 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		model.addElement(tfFruits.getText());
 		tfFruits.setText("");
 	}
-	protected void cmbFruitPropertyChange(PropertyChangeEvent evt) {
-		
-		
-		
-	}
+	protected void cmbFruitPropertyChange(PropertyChangeEvent evt) {}
+	
+	
 	protected void cmbFruitActionPerformed(ActionEvent e) {
 		JComboBox<String> cb = (JComboBox<String>) e.getSource();
 		String str= (String) cb.getSelectedItem();
@@ -166,4 +212,29 @@ public class ComboxEx extends JFrame implements PropertyChangeListener, ActionLi
 		//String str = (String) cb.getSelectedItem();
 		JOptionPane.showMessageDialog(null, "선택한 과일은 " + (String)cmbFruit.getSelectedItem());
 	}
+	protected void cmbStudentActionPerformed(ActionEvent e) {
+		
+		  JComboBox<Student> cbStd = (JComboBox<Student>) e.getSource();
+		  Student std = (Student) cbStd.getSelectedItem(); //System.out.println(std);
+		  lblStudent.setText(std+"");
+		 
+		 
+	}
+	protected void btnConfirmActionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(null, cmbStudent.getSelectedItem());
+	}
+	protected void btnSearchActionPerformed(ActionEvent e) {
+		int stdNum = Integer.parseInt(tfNum.getText());
+		System.out.println(stdNum);
+		Student selStd = modelStd.getElementAt(stdNum-1);
+		System.out.println(selStd);
+		cmbStudent.setSelectedItem(selStd);
+		/*
+		 * Student[] list = new Student[] {}; for(int i=0; i<3; i++) { list[i] =
+		 * modelStd.getElementAt(i); System.out.println(list[i]); }
+		 */
+		
+	}
+
+	
 }
