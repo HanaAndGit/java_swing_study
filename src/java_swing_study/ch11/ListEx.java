@@ -172,12 +172,12 @@ public class ListEx extends JFrame implements ListSelectionListener, ActionListe
 	}
 	
 	protected void strListValueChanged(ListSelectionEvent e) {
-		/*
-		 * System.out.println(e.getValueIsAdjusting()); if (!e.getValueIsAdjusting()) {
-		 * String selectValue = strList.getSelectedValue();
-		 * JOptionPane.showMessageDialog(null, "valueChanged - 선택한 과일은?" + selectValue);
-		 * }
-		 */
+		
+		  System.out.println(e.getValueIsAdjusting()); if (!e.getValueIsAdjusting()) {
+		  String selectValue = strList.getSelectedValue();
+		  JOptionPane.showMessageDialog(null, "valueChanged - 선택한 과일은?" + selectValue);
+		  }
+		 
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -199,14 +199,14 @@ public class ListEx extends JFrame implements ListSelectionListener, ActionListe
 	}
 	
 	protected void btnOk1ActionPerformed(ActionEvent e) {
-		int[] selIndexs = strList.getSelectedIndices();
-		for(int idx : selIndexs) {
-			System.out.println(idx);
-		}
-		System.out.println(strList.getSelectedIndex() + listFruits.get(strList.getSelectedIndex()));
+		/*
+		 * int[] selIndexs = strList.getSelectedIndices(); for(int idx : selIndexs) {
+		 * System.out.println(idx); } System.out.println(strList.getSelectedIndex() +
+		 * listFruits.get(strList.getSelectedIndex()));
+		 */
 		
 		JOptionPane.showMessageDialog(null, "actionPerformed - 선택한 과일은?" + strList.getSelectedValue());
-	}
+	} 
 	
 	protected void btnSet1ActionPerformed(ActionEvent e) {
 		strList.setSelectedIndex(listFruits.indexOf("peach"));

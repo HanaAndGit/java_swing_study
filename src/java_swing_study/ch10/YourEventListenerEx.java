@@ -87,6 +87,7 @@ public class YourEventListenerEx extends JFrame implements ActionListener {
 		contentPane.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
+		//내부 클래스
 		btn03 = new JButton("배경색 변경");
 		btn03.addActionListener(new MyAction05Listener());
 		panel_2.add(btn03, BorderLayout.CENTER);
@@ -96,6 +97,7 @@ public class YourEventListenerEx extends JFrame implements ActionListener {
 		contentPane.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
+		//익명 클래스
 		btn04 = new JButton("배경색 변경");
 		btn04.addActionListener(new ActionListener() {
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import java_swing_study.ch11.exam.Student;
 import java_swing_study.ch11.exam.StudentPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class StudentTableListEx extends JFrame implements ActionListener {
@@ -33,6 +35,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 	private JTable table;
 	private JPanel panel_1;
 	private JScrollPane scrollPane;
+	private JButton btnModi;
 	/**
 	 * Launch the application.
 	 */
@@ -76,15 +79,22 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 		pResult.add(panel);
 		
 		button = new JButton("추가");
+		button.addActionListener(this);
 		panel.add(button);
 		
-		button_1 = new JButton("취소");
+		btnModi = new JButton("수정");
+		btnModi.addActionListener(this);
+		panel.add(btnModi);
+		
+		button_1 = new JButton("리셋");
+		button_1.addActionListener(this);
 		panel.add(button_1);
 		
 		pStd = new StudentPanel();
 		contentPane.add(pStd, BorderLayout.NORTH);
 		
 		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
 		
@@ -154,9 +164,15 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int idx = table.getSelectedRow();
 				//System.out.println(idx);
-				//Student selectedStd = 
-				//pStd.getTfStdNo().setText(selectedStd.getStdNo()+"");
+				Student selectedStd = v.get(idx);
+				//System.out.println(selectedStd);
+				pStd.getTfStdNo().setText(selectedStd.getStdNo()+"");
+				pStd.getTfName().setText(selectedStd.getStdName());
+				pStd.getTfKor().setText(selectedStd.getKor()+"");
+				pStd.getTfEng().setText(selectedStd.getEng()+"");
+				pStd.getTfMath().setText(selectedStd.getMath()+"");
 				
 			}
 		});
@@ -167,41 +183,86 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int idx = table.getSelectedRow();
+				//System.out.println(idx);
+				Student selectedStd = v.get(idx);
+				JOptionPane.showMessageDialog(null, "선택한 학생은 : " + selectedStd.getStdNo() + "번 " + selectedStd.getStdName());
 				
 			}
 		});
 		popMenu.add(getSelectedItem);
 		
 		JMenuItem deleteItem = new JMenuItem("삭제");
-		deleteItem.addActionListener(myPopMenuListener);
+		deleteItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int idx = table.getSelectedRow();
+				//System.out.println(idx);
+				v.remove(idx);
+				loadData();
+				
+			}
+			
+		});
 		popMenu.add(deleteItem);
 		
 		return popMenu;
 		
 	}
 	
-	ActionListener myPopMenuListener = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			//actionCommand = 글자
-			if(e.getActionCommand().equals("수정")) {
-				
-				
-			}
-			if(e.getActionCommand().equals("삭제")) {
-				
-				
-			}
-				
-			
-		}
-	}; 
+	
 	
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == button_1) {
+			button_1ActionPerformed(e);
+		}
+		if (e.getSource() == btnModi) {
+			btnModiActionPerformed(e);
+		}
+		if (e.getSource() == button) {
+			buttonActionPerformed(e);
+		}
 
 	}
 	
-	
+	//추가 버튼
+	protected void buttonActionPerformed(ActionEvent e) {
+		int stdNo = Integer.parseInt(pStd.getTfStdNo().getText());
+		String stdName = pStd.getTfName().getText();
+		int kor =  Integer.parseInt(pStd.getTfKor().getText());
+		int eng = Integer.parseInt(pStd.getTfEng().getText());
+		int math = Integer.parseInt(pStd.getTfMath().getText());
+		
+		Student std = new Student(stdNo, stdName, kor, eng, math);
+		
+		int idx = table.getSelectedRow();
+		v.add(std);
+		loadData();
+	}
+	//수정 버튼
+	protected void btnModiActionPerformed(ActionEvent e) {
+		int stdNo = Integer.parseInt(pStd.getTfStdNo().getText());
+		String stdName = pStd.getTfName().getText();
+		int kor =  Integer.parseInt(pStd.getTfKor().getText());
+		int eng = Integer.parseInt(pStd.getTfEng().getText());
+		int math = Integer.parseInt(pStd.getTfMath().getText());
+		
+		Student std = new Student(stdNo, stdName, kor, eng, math);
+		
+		int idx = table.getSelectedRow();
+		//System.out.println(idx);
+		v.remove(idx);
+		v.add(idx,std);
+		loadData();
+	}
+	//리셋
+	protected void button_1ActionPerformed(ActionEvent e) {
+		pStd.getTfStdNo().setText("");
+		pStd.getTfName().setText("");
+		pStd.getTfKor().setText("");
+		pStd.getTfMath().setText("");
+		pStd.getTfEng().setText("");
+	}
 }
