@@ -26,6 +26,13 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 	private JPanel pResult;
 	private ArrayList<Student> v;
 	private StudentPanel pStd;
+	private JPopupMenu popMenu;
+	private JPanel panel;
+	private JButton button;
+	private JButton button_1;
+	private JTable table;
+	private JPanel panel_1;
+	private JScrollPane scrollPane;
 	/**
 	 * Launch the application.
 	 */
@@ -88,6 +95,8 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(table);
 		panel_1.add(scrollPane, BorderLayout.CENTER);
+		
+		table.setComponentPopupMenu(createPopupMenu());
 		loadData();
 	}
 
@@ -127,9 +136,41 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu = new JPopupMenu();
 		
+		JMenuItem addItem = new JMenuItem("추가");
+		addItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Student newStd = new Student(10, "황하나", 90, 90, 90);
+				v.add(newStd);
+				loadData();
+			}
+		});
+		
+		popMenu.add(addItem);
+		
 		JMenuItem updateItem = new JMenuItem("수정");
-		updateItem.addActionListener(myPopMenuListener);
+		updateItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//System.out.println(idx);
+				//Student selectedStd = 
+				//pStd.getTfStdNo().setText(selectedStd.getStdNo()+"");
+				
+			}
+		});
 		popMenu.add(updateItem);
+		
+		JMenuItem getSelectedItem = new JMenuItem("선택한 학생 확인");
+		getSelectedItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		popMenu.add(getSelectedItem);
 		
 		JMenuItem deleteItem = new JMenuItem("삭제");
 		deleteItem.addActionListener(myPopMenuListener);
@@ -145,48 +186,22 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			//actionCommand = 글자
 			if(e.getActionCommand().equals("수정")) {
-				//System.out.println("수정 ");
-				/*
-				 * //Student std = int selIdx = list.getSelectedIndex(); Student s =
-				 * v.get(selIdx); System.out.println(s);
-				 */
 				
-				/*
-				 * pStd.getTfStdNo().setText(Integer.toString(s.getStdNo()));
-				 * pStd.getTfName().setText(s.getStdName());
-				 * pStd.getTfKor().setText(Integer.toString(s.getKor()));
-				 * pStd.getTfMath().setText(Integer.toString(s.getMath()));
-				 * pStd.getTfEng().setText(Integer.toString(s.getEng()));
-				 */
-				/*
-				 * btnAdd.setText("수정"); list.setListData(new Vector<>(v));
-				 */
 				
 			}
 			if(e.getActionCommand().equals("삭제")) {
-				//System.out.println("삭제");
 				
-				//list에서 선택된 것이 있는지 판단
-				//선택된 인덱스 또는 value를 가져온 후에 
-				//arrayList에서 일치하는 것 삭제
-				//JList에서 setListData 호출 
-				/*
-				 * int selIdx = list.getSelectedIndex(); v.remove(selIdx); list.setListData(new
-				 * Vector<>(v));
-				 */
 				
 			}
 				
 			
 		}
 	}; 
-	private JPanel panel;
-	private JButton button;
-	private JButton button_1;
-	private JTable table;
-	private JPanel panel_1;
-	private JScrollPane scrollPane;
 	
+
 	public void actionPerformed(ActionEvent e) {
+
 	}
+	
+	
 }
