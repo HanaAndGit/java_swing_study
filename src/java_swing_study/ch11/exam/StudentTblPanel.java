@@ -1,4 +1,4 @@
-package java_swing_study.ch11;
+package java_swing_study.ch11.exam;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -17,8 +17,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
-import java_swing_study.ch11.exam.Student;
 
 @SuppressWarnings("serial")
 public class StudentTblPanel extends JPanel {
