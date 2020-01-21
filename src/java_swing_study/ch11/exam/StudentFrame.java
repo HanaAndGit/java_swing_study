@@ -4,27 +4,25 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class StudentFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private StudentPanel pStd;
-	private JPanel pBtnText;
-	private JPanel panel_2;
+	private JPanel pContent;
+	private StudentTblPanel pList;
+	private StudentPanel pStudent;
+	private JPanel pBtns;
 	private JButton btnAdd;
-	private JButton btnReset;
-	private JTextArea ta;
+	private JButton btnCancel;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -38,52 +36,65 @@ public class StudentFrame extends JFrame implements ActionListener {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public StudentFrame() {
 		initialize();
 	}
+	
 	private void initialize() {
-		setTitle("텍스트 영역 예제");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 437, 428);
+		setBounds(100, 100, 450, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
-		pStd = new StudentPanel();
-		contentPane.add(pStd, BorderLayout.NORTH);
+		pContent = new JPanel();
+		contentPane.add(pContent);
+		pContent.setLayout(new BorderLayout(0, 0));
 		
-		pBtnText = new JPanel();
-		contentPane.add(pBtnText, BorderLayout.CENTER);
-		pBtnText.setLayout(new BorderLayout(0, 0));
+		pStudent = new StudentPanel();
+		pContent.add(pStudent, BorderLayout.CENTER);
 		
-		panel_2 = new JPanel();
-		pBtnText.add(panel_2, BorderLayout.NORTH);
+		pBtns = new JPanel();
+		contentPane.add(pBtns);
 		
 		btnAdd = new JButton("추가");
 		btnAdd.addActionListener(this);
-		panel_2.add(btnAdd);
+		pBtns.add(btnAdd);
 		
-		btnReset = new JButton("취소");
-		panel_2.add(btnReset);
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
+		pBtns.add(btnCancel);
 		
-		ta = new JTextArea();
-		pBtnText.add(ta, BorderLayout.CENTER);
+		pList = new StudentTblPanel();
+		contentPane.add(pList);
+		
+		ArrayList<Student> stds = new ArrayList<Student>();
+		stds.add(new Student(1, "서현진", 80, 90, 70));
+		stds.add(new Student(2, "이성경", 90, 90, 40));
+		stds.add(new Student(3, "이유영", 50, 50, 60));
+		
+		pList.loadData(stds);
+//		pList.setLayout(new BorderLayout(0, 0));
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel) {
+			btnCancelActionPerformed(e);
+		}
 		if (e.getSource() == btnAdd) {
 			btnAddActionPerformed(e);
 		}
 	}
 	
-	//추가버튼
 	protected void btnAddActionPerformed(ActionEvent e) {
-		Student std = pStd.getItem();
-		ta.append(std.toString() + "\n");
-		pStd.clearTf();
+		Student std = pStudent.getItem();
+//		ta.append(std.toString() + "\n");
+		pStudent.clearTf();
+	}
+	
+	protected void btnCancelActionPerformed(ActionEvent e) {
+		pStudent.clearTf();
 	}
 }
+
