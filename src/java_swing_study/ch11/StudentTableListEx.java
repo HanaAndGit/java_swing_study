@@ -26,7 +26,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JPanel pResult;
-	private ArrayList<Student> v;
+	private ArrayList<Student> stds;
 	private StudentPanel pStd;
 	private JPopupMenu popMenu;
 	private JPanel panel;
@@ -56,10 +56,10 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public StudentTableListEx() {
-		v = new  ArrayList<Student>();
-		v.add(new Student(1, "서현진", 80, 80, 90));
-		v.add(new Student(2, "이성경", 90, 10, 20));
-		v.add(new Student(3, "이유영", 80, 80, 20));
+		stds = new  ArrayList<Student>();
+		stds.add(new Student(1, "서현진", 80, 80, 90));
+		stds.add(new Student(2, "이성경", 90, 10, 20));
+		stds.add(new Student(3, "이유영", 80, 80, 20));
 		
 		initialize();
 	}
@@ -115,9 +115,9 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 	}
 
 	private Object[][] getRows() {
-		Object[][] rows = new Object[v.size()][];
+		Object[][] rows = new Object[stds.size()][];
 		for(int i=0; i<rows.length; i++) {
-			rows[i] = toArray(v.get(i));
+			rows[i] = toArray(stds.get(i));
 		}
 		return rows;
 	}
@@ -152,7 +152,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Student newStd = new Student(10, "황하나", 90, 90, 90);
-				v.add(newStd);
+				stds.add(newStd);
 				loadData();
 			}
 		});
@@ -166,7 +166,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				int idx = table.getSelectedRow();
 				//System.out.println(idx);
-				Student selectedStd = v.get(idx);
+				Student selectedStd = stds.get(idx);
 				//System.out.println(selectedStd);
 				pStd.setItem(selectedStd);
 				/*
@@ -188,7 +188,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				int idx = table.getSelectedRow();
 				//System.out.println(idx);
-				Student selectedStd = v.get(idx);
+				Student selectedStd = stds.get(idx);
 				JOptionPane.showMessageDialog(null, "선택한 학생은 : " + selectedStd.getStdNo() + "번 " + selectedStd.getStdName());
 				
 			}
@@ -202,7 +202,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				int idx = table.getSelectedRow();
 				//System.out.println(idx);
-				v.remove(idx);
+				stds.remove(idx);
 				loadData();
 				
 			}
@@ -241,7 +241,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 		Student std = new Student(stdNo, stdName, kor, eng, math);
 		
 		int idx = table.getSelectedRow();
-		v.add(std);
+		stds.add(std);
 		loadData();
 	}
 	//수정 버튼
@@ -256,8 +256,8 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 		
 		int idx = table.getSelectedRow();
 		//System.out.println(idx);
-		v.remove(idx);
-		v.add(idx,std);
+		stds.remove(idx);
+		stds.add(idx,std);
 		loadData();
 	}
 	//리셋
