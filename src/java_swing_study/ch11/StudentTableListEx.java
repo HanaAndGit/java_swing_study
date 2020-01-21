@@ -168,11 +168,14 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 				//System.out.println(idx);
 				Student selectedStd = v.get(idx);
 				//System.out.println(selectedStd);
-				pStd.getTfStdNo().setText(selectedStd.getStdNo()+"");
-				pStd.getTfName().setText(selectedStd.getStdName());
-				pStd.getTfKor().setText(selectedStd.getKor()+"");
-				pStd.getTfEng().setText(selectedStd.getEng()+"");
-				pStd.getTfMath().setText(selectedStd.getMath()+"");
+				pStd.setItem(selectedStd);
+				/*
+				 * pStd.getTfStdNo().setText(selectedStd.getStdNo()+"");
+				 * pStd.getTfName().setText(selectedStd.getStdName());
+				 * pStd.getTfKor().setText(selectedStd.getKor()+"");
+				 * pStd.getTfEng().setText(selectedStd.getEng()+"");
+				 * pStd.getTfMath().setText(selectedStd.getMath()+"");
+				 */
 				
 			}
 		});
