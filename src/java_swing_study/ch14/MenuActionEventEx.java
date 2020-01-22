@@ -6,18 +6,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
+import java_swing_study.ch11.exam.Student;
 import java_swing_study.ch11.exam.StudentPanel;
-
-import javax.swing.JSeparator;
 
 public class MenuActionEventEx extends JFrame implements ActionListener {
 
@@ -32,6 +34,12 @@ public class MenuActionEventEx extends JFrame implements ActionListener {
 	private String imgDirPath = System.getProperty("user.dir") + "\\images\\";
 	private JMenuItem nmStudent;
 	private JSeparator separator;
+	private JToolBar toolBar;
+	private JButton btnNew;
+	private JButton btnImg;
+	private JButton btnNewButton;
+	private JSeparator separator_1;
+	private JButton btnModal;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -95,9 +103,45 @@ public class MenuActionEventEx extends JFrame implements ActionListener {
 		nmHide.addActionListener(this);
 		nmReshow.addActionListener(this);
 		nmExit.addActionListener(this);
+		
+		toolBar = new JToolBar();
+		toolBar.setName("Kitae Menu");
+		contentPane.add(toolBar, BorderLayout.NORTH);
+		
+		btnNew = new JButton("학생정보 입력");
+		btnNew.addActionListener(this);
+		btnNew.setToolTipText("학생정보 대화상자");
+		toolBar.add(btnNew);
+		
+		btnImg = new JButton("Img");
+		btnImg.setIcon(new ImageIcon(/*(MenuActionEventEx.class.getResource(*/imgDirPath + "open.jpg"));
+		toolBar.add(btnImg);
+		
+		/*
+		 * separator_1 = new JSeparator(); separator_1.setMaximumSize(new Dimension(2,
+		 * 13)); separator_1.setOrientation(SwingConstants.VERTICAL);
+		 */
+		toolBar.addSeparator();
+		
+		btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(this);
+		toolBar.add(btnNewButton);
+		
+		btnModal = new JButton("모달 대화상자");
+		btnModal.addActionListener(this);
+		toolBar.add(btnModal);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnModal) {
+			btnModalActionPerformed(e);
+		}
+		if (e.getSource() == btnNewButton) {
+			btnNewButtonActionPerformed(e);
+		}
+		if (e.getSource() == btnNew) {
+			btnNewActionPerformed(e);
+		}
 		if (e.getSource() == nmStudent) {
 			nmStudentActionPerformed(e);
 		}
@@ -147,5 +191,39 @@ public class MenuActionEventEx extends JFrame implements ActionListener {
 		//============ 다시 그리기 ===========
 		revalidate();
 		repaint();
+	}
+	protected void btnNewActionPerformed(ActionEvent e) {
+		// 1번 할일 : DialogEx main 복사 후 붙여넣기
+		DialogEx dialog = new DialogEx();
+		//부모지정
+		dialog.setParent(this);
+		dialog.setStudent(new Student(1,"김", 80, 90, 90));
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+	}
+	
+	public void setStudentText(Student std) {
+		lblImg.setText(std.toString());
+	}
+	
+	protected void btnNewButtonActionPerformed(ActionEvent e) {
+		DialogEx dialog = new DialogEx();
+		
+		dialog.setStudent(new Student(1,"김", 80, 90, 90));
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+		
+		Student std = dialog.getStudent();
+		lblImg.setText(std.toString());
+	}
+	protected void btnModalActionPerformed(ActionEvent e) {
+		DialogEx dialog = new DialogEx();
+		dialog.setModal(true);
+		
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+		//dialog 대화상자가 닫히면 아래 코드 수행됨
+		Student std = dialog.getInput();
+		lblImg.setText(std.toString());
 	}
 }
