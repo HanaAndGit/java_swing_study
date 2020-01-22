@@ -2,23 +2,27 @@ package java_swing_study.ch11.exam;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
 public class DepartmentFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JPanel panel;
-	private DeptPanel panel_1;
-	private JPanel panel_2;
+	private JPanel pDept;
+	private DeptPanel pDetpInfo;
+	private JPanel pBtnsTable;
 	private ArrayList<Department> arr;
-	private JPanel panel_3;
-	private DeptTblPanel panel_4;
+	private JPanel pBtns;
+	private DeptTblPanel pTable;
 	private JButton btn01;
 	private JButton btn02;
 	private JButton btn03;
@@ -56,39 +60,61 @@ public class DepartmentFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
-		panel = new JPanel();
-		contentPane.add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
+		pDept = new JPanel();
+		contentPane.add(pDept);
+		pDept.setLayout(new BorderLayout(0, 0));
 		
-		panel_1 = new DeptPanel();
-		panel.add(panel_1, BorderLayout.NORTH);
+		pDetpInfo = new DeptPanel();
+		pDept.add(pDetpInfo, BorderLayout.NORTH);
 		
-		panel_2 = new JPanel();
-		panel.add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new BorderLayout(0, 0));
+		pBtnsTable = new JPanel();
+		pDept.add(pBtnsTable, BorderLayout.CENTER);
+		pBtnsTable.setLayout(new BorderLayout(0, 0));
 		
-		panel_3 = new JPanel();
-		panel_2.add(panel_3, BorderLayout.NORTH);
+		pBtns = new JPanel();
+		pBtnsTable.add(pBtns, BorderLayout.NORTH);
 		
 		btn01 = new JButton("수정");
-		panel_3.add(btn01);
+		pBtns.add(btn01);
 		
 		btn02 = new JButton("확인");
-		panel_3.add(btn02);
+		pBtns.add(btn02);
 		
 		btn03 = new JButton("취소");
-		panel_3.add(btn03);
+		pBtns.add(btn03);
 		
-		panel_4 = new DeptTblPanel();
-		panel_2.add(panel_4, BorderLayout.CENTER);
+		pTable = new DeptTblPanel();
+		pBtnsTable.add(pTable, BorderLayout.CENTER);
 		
 		arr = new ArrayList<Department>(); 
 		arr.add(new Department(1, "영업", 8));
 		arr.add(new Department(2, "기획", 8)); 
 		arr.add(new Department(3, "마케팅", 8));
 		
-		panel_4.loadData(arr);
+		pTable.loadData(arr);
+		
+		pTable.table.setComponentPopupMenu(setPopupMenu());
 		 
 	}
+	
+	public JPopupMenu setPopupMenu() {
+		JPopupMenu popup = new JPopupMenu();
+		
+		JMenuItem setItem = new JMenuItem("수정");
+		setItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		
+		popup.add(setItem);
+		
+		return popup;
+		
+	}
+	
 
 }

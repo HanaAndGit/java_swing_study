@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
@@ -90,16 +91,55 @@ public class StudentFrame extends JFrame implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int idx = pList.table.getSelectedColumn();
-				Student std = stds.get(idx);
-				pStudent.setItem(std);
+				Student std = pList.getSelectedItem();
+				//System.out.println(pList.getSelectedItem());
+				pStudent.getTfStdNo().setText(std.getStdNo()+"");
+				pStudent.getTfName().setText(std.getStdName());
+				pStudent.getTfKor().setText(std.getKor()+"");
+				pStudent.getTfEng().setText(std.getEng()+"");
+				pStudent.getTfMath().setText(std.getMath()+"");
 				
 			}
 		});
 		
 		popMenu.add(addItem);
+		
+		JMenuItem checkItem = new JMenuItem("선택한 학생 확인");
+		checkItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "선택한 학생은 ");
+				
+			}
+		});
+		popMenu.add(checkItem);
+		
+		JMenuItem delItem = new JMenuItem("학생 삭제");
+		delItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i = pList.table.getSelectedRow();
+				System.out.println(i);
+				//pList.remove(pList.table.getSelectedRow());
+				pList.model.removeRow(i);
+				
+			}
+		});
+		popMenu.add(delItem);
+		
 		return popMenu;
 	}
+	
+	
+	// 삭제 후 다시 선택하면 인덱스 번호가 변경되기 때문에 stds 에서 가져오면 안됨 
+	/*
+	 * public Student findStd() { int idx = pList.table.getSelectedRow(); Student
+	 * std = stds.get(idx);
+	 * 
+	 * return std; }
+	 */
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
