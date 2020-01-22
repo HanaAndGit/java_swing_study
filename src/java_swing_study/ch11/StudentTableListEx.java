@@ -240,7 +240,7 @@ public class StudentTableListEx extends JFrame implements ActionListener {
 		
 		Student std = new Student(stdNo, stdName, kor, eng, math);
 		
-		int idx = table.getSelectedRow();
+		//int idx = table.getSelectedRow();
 		stds.add(std);
 		loadData();
 	}

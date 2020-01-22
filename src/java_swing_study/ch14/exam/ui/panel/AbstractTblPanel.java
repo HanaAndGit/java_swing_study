@@ -46,10 +46,10 @@ public abstract class AbstractTblPanel<T> extends JPanel {
 		model = new NotEditableModel(getRows(items),getColNames());
 		table.setModel(model);
 
-		setTblWidthAlign();
+		//setTblWidthAlign();
 		
-		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-		table.setRowSorter(sorter);
+		//RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+		//table.setRowSorter(sorter);
 		
 //		table.getColumnModel().getColumn(2).setCellRenderer(new ReturnTableCellRenderer());
 	}

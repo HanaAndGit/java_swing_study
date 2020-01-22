@@ -3,13 +3,14 @@ package java_swing_study.ch14.exam.ui.panel;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
 import java_swing_study.ch14.exam.dto.Student;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class StudentTblPanel extends AbstractTblPanel<Student> {
-
+	private JTable table;
 	/**
 	 * Create the panel.
 	 */
@@ -18,13 +19,28 @@ public class StudentTblPanel extends AbstractTblPanel<Student> {
 	
 	}
 	
-	protected Object[][] getRows(ArrayList<Student> stds){
-		Object[][] rows = new Object[stds.size()][];
-		for(int i=0; i<rows.length; i++) {
-			rows[i] = toArray(stds.get(i));
-		}
-		return rows;
+	
+	
+	public JTable getTable() {
+		return table;
 	}
+
+
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+
+
+//	protected Object[][] getRows(ArrayList<Student> stds){
+//		Object[][] rows = new Object[stds.size()][];
+//		for(int i=0; i<rows.length; i++) {
+//			rows[i] = toArray(stds.get(i));
+//			//System.out.println(toArray(stds.get(i)));
+//		}
+//		return rows;
+//	}
 	
 	@Override
 	protected void setTblWidthAlign() {
@@ -48,7 +64,9 @@ public class StudentTblPanel extends AbstractTblPanel<Student> {
 				item.getStdName(),
 				item.getKor(),
 				item.getEng(),
-				item.getMath()
+				item.getMath(),
+				item.total(),
+				item.avg()
 		};
 	}
 
