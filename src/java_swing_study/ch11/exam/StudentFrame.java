@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
@@ -22,6 +24,7 @@ public class StudentFrame extends JFrame implements ActionListener {
 	private JPanel pBtns;
 	private JButton btnAdd;
 	private JButton btnCancel;
+	private ArrayList<Student> stds;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -69,13 +72,33 @@ public class StudentFrame extends JFrame implements ActionListener {
 		pList = new StudentTblPanel();
 		contentPane.add(pList);
 		
-		ArrayList<Student> stds = new ArrayList<Student>();
+		stds = new ArrayList<Student>();
 		stds.add(new Student(1, "서현진", 80, 90, 70));
 		stds.add(new Student(2, "이성경", 90, 90, 40));
 		stds.add(new Student(3, "이유영", 50, 50, 60));
 		
 		pList.loadData(stds);
+		pList.table.setComponentPopupMenu(setPopupMenu());
 //		pList.setLayout(new BorderLayout(0, 0));
+	}
+
+	private JPopupMenu setPopupMenu() {
+		JPopupMenu popMenu = new JPopupMenu();
+		
+		JMenuItem addItem = new JMenuItem("수정");
+		addItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int idx = pList.table.getSelectedColumn();
+				Student std = stds.get(idx);
+				pStudent.setItem(std);
+				
+			}
+		});
+		
+		popMenu.add(addItem);
+		return popMenu;
 	}
 
 	public void actionPerformed(ActionEvent e) {
