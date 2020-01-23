@@ -60,7 +60,6 @@ public class StudentMainPanel extends JPanel implements ActionListener {
 		}
 	}
 	protected void btnAddActionPerformed(ActionEvent e) {
-		
 		Student std =  pStdInfo.getItem();//입력란에 입력된 학생 객체 가져오기
 		stds.add(std); //ArrayList에 추가하기
 		//System.out.println(std);
@@ -70,6 +69,7 @@ public class StudentMainPanel extends JPanel implements ActionListener {
 		
 	}
 	protected void btnCancelActionPerformed(ActionEvent e) {
+		
 		System.exit(0);
 	}
 }

@@ -18,6 +18,43 @@ public class DeptPanel extends AbsItemPanel<Department> {
 	private JLabel lbl03;
 	private JTextField tfLo;
 
+	
+	public JLabel getLbl01() {
+		return lbl01;
+	}
+	public void setLbl01(JLabel lbl01) {
+		this.lbl01 = lbl01;
+	}
+	public JTextField getTfNo() {
+		return tfNo;
+	}
+	public void setTfNo(JTextField tfNo) {
+		this.tfNo = tfNo;
+	}
+	public JLabel getLbl02() {
+		return lbl02;
+	}
+	public void setLbl02(JLabel lbl02) {
+		this.lbl02 = lbl02;
+	}
+	public JTextField getTfName() {
+		return tfName;
+	}
+	public void setTfName(JTextField tfName) {
+		this.tfName = tfName;
+	}
+	public JLabel getLbl03() {
+		return lbl03;
+	}
+	public void setLbl03(JLabel lbl03) {
+		this.lbl03 = lbl03;
+	}
+	public JTextField getTfLo() {
+		return tfLo;
+	}
+	public void setTfLo(JTextField tfLo) {
+		this.tfLo = tfLo;
+	}
 	/**
 	 * Create the panel.
 	 */

@@ -1,6 +1,7 @@
 package java_swing_study.ch14;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,11 +11,20 @@ import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTabbedPane;
+import java_swing_study.ch14.exam.ui.panel.StudentPanel;
 
 public class OptionPaneEx extends JFrame implements ActionListener {
 
@@ -28,7 +38,16 @@ public class OptionPaneEx extends JFrame implements ActionListener {
 	private JButton btnPopupConfirm;
 	private JButton btnPopupMsg;
 	private JLabel lblPopup;
-
+	private JButton btnFileOpen;
+	private JButton btnFileSave;
+	private JLabel lblImg;
+	private JFileChooser chooser;
+	private JButton btnColor;
+	private JLabel lblColor;
+	private Color selectedColor;
+	private JTabbedPane tabbedPane;
+	private JLabel lbltab1;
+	private StudentPanel panel;
 	/**
 	 * Launch the application.
 	 */
@@ -49,6 +68,8 @@ public class OptionPaneEx extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public OptionPaneEx() {
+		chooser = new JFileChooser(System.getProperty("user.dir")); //어느 경로로부터 열릴 것인지 지정
+		selectedColor = JColorChooser.showDialog(null, "Color", Color.YELLOW);
 		initialize();
 	}
 	private void initialize() {
@@ -83,13 +104,47 @@ public class OptionPaneEx extends JFrame implements ActionListener {
 		pPopup.add(lblPopup);
 		
 		pfileDlg = new JPanel();
+		pfileDlg.setBorder(new TitledBorder(null, "\uD30C\uC77C\uC5F4\uAE30/\uC800\uC7A5 \uB2E4\uC774\uC5BC\uB85C\uADF8", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pTap.add(pfileDlg);
+		pfileDlg.setLayout(new BoxLayout(pfileDlg, BoxLayout.Y_AXIS));
+		
+		btnFileOpen = new JButton("열기");
+		btnFileOpen.addActionListener(this);
+		pfileDlg.add(btnFileOpen);
+		
+		btnFileSave = new JButton("저장");
+		btnFileSave.addActionListener(this);
+		pfileDlg.add(btnFileSave);
+		
+		lblImg = new JLabel("");
+		pfileDlg.add(lblImg);
 		
 		pColorDlg = new JPanel();
+		pColorDlg.setBorder(new TitledBorder(null, "\uCEEC\uB7EC \uB2E4\uC774\uC5BC\uB85C\uADF8", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pTap.add(pColorDlg);
+		pColorDlg.setLayout(new BorderLayout(0, 0));
+		
+		btnColor = new JButton("색상 선택");
+		btnColor.addActionListener(this);
+		pColorDlg.add(btnColor, BorderLayout.NORTH);
+		
+		lblColor = new JLabel("Hello World");
+		lblColor.setFont(new Font("Arial", Font.BOLD, 15));
+		lblColor.setHorizontalAlignment(SwingConstants.CENTER);
+		pColorDlg.add(lblColor, BorderLayout.CENTER);
 		
 		pCenter = new JPanel();
 		contentPane.add(pCenter, BorderLayout.CENTER);
+		pCenter.setLayout(new BorderLayout(0, 0));
+		
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		pCenter.add(tabbedPane);
+		
+		lbltab1 = new JLabel(new ImageIcon(System.getProperty("user.dir")+ "\\images\\"+ "superman.jpg"));
+		tabbedPane.addTab("tab1", null, lbltab1, null);
+		
+		panel = new StudentPanel();
+		tabbedPane.addTab("New tab", null, panel, null);
 
 		btnPopupInput.addActionListener(this);
 		btnPopupConfirm.addActionListener(this);
@@ -97,6 +152,15 @@ public class OptionPaneEx extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnColor) {
+			btnColorActionPerformed(e);
+		}
+		if (e.getSource() == btnFileOpen) {
+			btnFileOpenActionPerformed(e);
+		}
+		if (e.getSource() == btnFileSave) {
+			btnFileSaveActionPerformed(e);
+		}
 		if (e.getSource() == btnPopupMsg) {
 			btnPopupMsgActionPerformed(e);
 		}
@@ -144,4 +208,37 @@ public class OptionPaneEx extends JFrame implements ActionListener {
 		ImageIcon icon = new ImageIcon(System.getProperty("user.dir")+"\\images\\" + "icon1.png");
 		JOptionPane.showMessageDialog(null, "열심히", "자바 프로젝트", JOptionPane.ERROR_MESSAGE, icon);
 	}
-}
+	protected void btnFileSaveActionPerformed(ActionEvent e) {
+		int res = chooser.showSaveDialog(this);
+		if(res != JFileChooser.APPROVE_OPTION) {//열기 버튼을 눌렀다면
+			JOptionPane.showMessageDialog(this, "파일을 선택하지 않았습니다.", "경고" ,JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		String filePath = chooser.getSelectedFile().getPath();//파일 하나만 선택했을 때
+		//저장 누르면 이 filePath 경로가 받아져옴 -> 여기에 파일 입출력 writer를 써서 해당 경로에다 write 하면 저장됨
+		//System.out.println(filePath);
+		
+	}
+	protected void btnFileOpenActionPerformed(ActionEvent e) {
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF & PNG", "jpg", "gif", "png"); //extension 확장자
+		chooser.setFileFilter(filter);
+		int res = chooser.showOpenDialog(this); //this or null
+		if(res != JFileChooser.APPROVE_OPTION) {//열기 버튼을 눌렀다면
+			JOptionPane.showMessageDialog(this, "파일을 선택하지 않았습니다.", "경고" ,JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		String filePath = chooser.getSelectedFile().getPath();//파일 하나만 선택했을 때
+		lblImg.setIcon(new ImageIcon(filePath));
+		
+	}
+	protected void btnColorActionPerformed(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if(cmd.equals("Color")) {
+			Color selectedColor = JColorChooser.showDialog(null, "Color", Color.YELLOW);
+		}
+			if(selectedColor != null) {
+				lblColor.setForeground(selectedColor);
+			}
+		}
+	}
+
