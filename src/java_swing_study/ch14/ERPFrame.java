@@ -21,7 +21,7 @@ public class ERPFrame extends JFrame implements ActionListener {
 	private JMenu mnItem;
 	private JMenuItem mnStudent;
 	private JMenuItem mnDept;
-	private StudentMainPanel panel = new StudentMainPanel();;
+	private StudentMainPanel panel = new StudentMainPanel();
 	private DeptMainPanel panel_1 = new DeptMainPanel();
 
 	/**
@@ -81,13 +81,23 @@ public class ERPFrame extends JFrame implements ActionListener {
 	}
 	protected void mnStudentActionPerformed(ActionEvent e) {
 		//contentPane.remove(panel_1);
-		
+		int count = contentPane.getComponentCount();
+		if(count == 1) {
+			contentPane.remove(panel_1);
+		}
+		//System.out.println(count);
 		contentPane.add(panel, BorderLayout.CENTER);
 		revalidate();
 		repaint();
+		//count = contentPane.getComponentCount();
+		//System.out.println(count);
 		
 	}
 	protected void mnDeptActionPerformed(ActionEvent e) {
+		int count = contentPane.getComponentCount();
+		if(count == 1) {
+			contentPane.remove(panel);
+		}
 		//contentPane.remove(panel);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		revalidate();
